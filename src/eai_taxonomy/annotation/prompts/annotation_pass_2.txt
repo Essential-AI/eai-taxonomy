@@ -1,0 +1,278 @@
+Given the following web document, analyze it and classify it according to following taxonomies. Your response should strictly follow the format below.
+
+For each taxonomy you will be providing a primary and secondary classification. For the secondary classification, select the most appropriate option from the remaining list. You may not abstain from providing a secondary classification.
+
+For context, these are web documents that have been extracted from HTML to plaintext using the resiliparse extraction library. For documents over 30k characters, we chunk them into beginning, middle, and end to limit the context length.
+
+
+# Taxonomy Definitions
+
+
+## [Custom] Document Type Taxonomy
+
+
+### Taxonomy Definition
+
+1 About (Org.)
+  - An organizational "About Page", typically containing a self-description or introduction by an organization such as a company, university, government agency, non-profit.
+  - Note that the content may appear similar to a 'Knowledge Article' in some cases, but is not verified and may contain self-promotion.
+
+2 About (Personal)
+  - An "About Page" on a personal website or hobby website, typically containing a self-description, introduction or profile information.
+
+3 Academic Writing
+  - Examples: a research paper, a paper abstract, a thesis, a literature review.
+
+4 Audio Transcript
+  - A written record of spoken language.
+  - Examples: interviews (e.g., in a newspaper), the transcript of a court hearing, movie, podcast, lecture, or speech.
+
+5 Comment Section
+  - A comment section or discussion forum with multiple posts or comments.
+  - Examples: Community sites like reddit, comment sections on news article or blogs.
+
+6 Content Listing
+  - The page contains an overview of content and is used for navigation.
+  - Examples: sitemap, product catalog, search results, news listings with short snippets of articles.
+  - Note that hyperlinks are not visible from the text content and have to be deduced.
+
+7 Creative Writing
+  - The page consists of a short story, chapters from a novel, poem or song lyrics.
+
+8 Documentation
+  - Examples: technical writing, API documentation, README files, source code.
+  - Unlike 'Customer Support', meant for developers and experts, rather than end-users.
+
+9 FAQ
+  - The page content is in the Frequently Asked Questions format.
+
+10 Knowledge Article
+  - Written in an objective and neutral style.
+  - Published on a moderated platform (like Wikipedia) or by a reputable source.
+
+11 Legal Notices
+  - Examples: terms of service, legal disclaimers, privacy policy, license agreement.
+
+12 Listicle
+  - A blog or article that presents content in the form of a list.
+  - Examples: Buzzfeed-style articles, "Top 10" lists, "4 best places to visit in X".
+  - Lists showing the site contents and facilitate navigation fall under 'Content Listing'.
+
+13 News (Org.)
+  - Organizational news and announcements.
+  - Examples: a press release, a blog post by an organization such as a company, university, government agency, non-profit organization.
+
+14 News Article
+  - Written by journalists on current events and published by news organizations.
+  - Long reads, profiles, editorials, and journalistic essays fall under 'Nonfiction Writing'.
+  - Newspaper interviews fall under 'Audio Transcript'.
+
+15 Nonfiction Writing
+  - Long reads, profiles, editorials, essays, obituaries, memoirs and other forms of nonfiction writing, written by journalists and other professional writers.
+
+16 Personal Blog
+  - Written by an individual typically relating personal experiences and opinions.
+
+17 Product Page
+  - Typically contains descriptions and promotions for a product or service.
+  - Also includes products in a wider sense, for example university course descriptions.
+
+18 Q&A Forum
+  - A user forum with an explicit question & answer format, e.g., Quora, Stack Exchange.
+
+19 Spam / Ads
+  - The page consists primarily of spam content, SEO keyword stuffing, or short online ads for other pages, products or services, or has no apparent purpose.
+
+20 Structured Data
+  - Multiple data entries with a common structure.
+  - Examples: a table, datasheet, movie database, glossary, dictionary, json file, csv, xml.
+
+21 Customer Support
+  - Content by an organization and for a general audience.
+  - Examples: a troubleshooting guide.
+
+22 Truncated
+  - The page contents are incomplete, e.g., truncated, pay-walled, or require a login.
+  - If the page has multiple snippets of truncated articles, choose 'Content Listing'.
+  - Also includes multimedia web pages where the web page text primarily describes and supplements the audiovisual content, e.g., a video description or image gallery.
+
+23 Tutorial
+  - Examples: cooking recipes, DIY instructions, WikiHow page, Khan Academy course.
+  - The page must contain the actual content of the tutorial / how-to guide.
+  - Guides specific to products/services from the website fall under 'Customer Support'.
+
+24 User Review
+  - Reviews posted by users, e.g., on Yelp, TripAdvisor.
+
+25 Other/Unclassified
+  - Does not fit any category above or is too ambiguous to classify.
+
+
+## [Custom] Reasoning Depth Taxonomy
+
+
+### Taxonomy Definition
+
+1 No Reasoning
+  - Pure statements/facts with no explanation; no "why" or "how."
+  - The text lacks any evidence of thinking or reasoning.
+  - Simply presents information without attempting to analyze, explain, or justify.
+
+2 Basic Reasoning
+  - Straightforward application of known techniques or simple analysis.
+  - Minimal explanation with short cause-effect statements.
+  - Limited to summarizing without deeper logic.
+  - Example: academic abstracts, basic descriptions with minimal explanation.
+
+3 Intermediate Reasoning
+  - Consideration of multiple approaches or trade-offs between solutions.
+  - Some logical steps that connect ideas (A→B→C) but not exhaustively developed.
+  - Shows evidence of structured thinking but doesn't fully elaborate complex chains.
+  - Explains "why" and "how" but without deep exploration.
+
+4 Advanced Reasoning
+  - Multi-step reasoning chains to solve complex problems.
+  - Detailed, step-by-step logic where multiple reasoning steps are explicit.
+  - Advanced reasoning patterns often used in specialized domains.
+  - Thorough analysis with well-developed explanations.
+
+5 Exceptional Reasoning
+  - Innovative approaches with novel abstraction or theoretical frameworks.
+  - Rigorous, exhaustive argumentation with long chain-of-thought reasoning.
+  - Combines multiple reasoning techniques in creative ways.
+  - Original insights, proofs, or highly sophisticated logical structures.
+
+6 Indeterminate
+  - Not enough context to judge reasoning depth.
+
+
+## [Custom] Technical Correctness Taxonomy
+
+
+### Taxonomy Definition
+
+1 Technically Flawed
+  - The text contains significant technical errors or inaccuracies.
+  - Includes incorrect units, incomplete derivations, or major technical flaws.
+  - Content has fundamental technical problems that undermine its validity.
+
+2 Partially Correct
+  - The text demonstrates some technical correctness, but with notable flaws or omissions.
+  - Contains some errors in calculations, terminology, or application of concepts.
+  - Generally understandable but has issues that affect overall accuracy.
+
+3 Mostly Correct
+  - The text demonstrates technical correctness, with only minor flaws or omissions.
+  - Contains minor algebraic errors, incomplete explanations, or small technical issues.
+  - Generally accurate with only minor problems.
+
+4 Highly Correct
+  - The text demonstrates high technical correctness, with clear and accurate explanations.
+  - Provides precise definitions, complete derivations, and accurate technical details.
+  - Shows strong command of technical material with minimal or no errors.
+
+5 Exceptionally Correct
+  - The text exemplifies exceptional technical correctness, with rigorous and precise explanations.
+  - Contains formal proofs, precise calculations, and flawless technical content.
+  - Demonstrates mastery of technical material at the highest level.
+
+6 Not Applicable/Indeterminate
+  - The content does not contain technical material that can be evaluated for correctness.
+  - Not enough context to judge technical correctness.
+
+
+## [Custom] Educational Level Taxonomy
+
+
+### Taxonomy Definition
+
+1 General Audience
+  - Content is accessible to anyone with basic literacy.
+  - No specialized knowledge or education required.
+  - Explained in simple terms that most people can understand.
+  - Examples: general news articles, basic instructions, simple explanations.
+
+2 High School Level
+  - Content requires high school level education to fully comprehend.
+  - Some specialized terminology but explained for non-experts.
+  - Assumes basic background knowledge in common subjects.
+  - Examples: introductory tutorials, popular science articles, standard news analysis.
+
+3 Undergraduate Level
+  - Content requires college-level education to fully comprehend.
+  - Uses specialized terminology and concepts from specific fields.
+  - Assumes significant background knowledge in the subject area.
+  - Examples: undergraduate textbooks, specialized tutorials, in-depth analyses.
+
+4 Graduate/Expert Level
+  - Content requires graduate-level education or domain expertise.
+  - Uses advanced terminology and concepts without extensive explanation.
+  - Assumes deep background knowledge and specialized training.
+  - Examples: research papers, technical documentation, advanced theoretical discussions.
+
+5 Indeterminate
+  - Not enough context to judge the educational level required.
+
+
+# Document 
+
+
+## Document
+
+URL: {url}
+Length: {num_char} characters
+Document Content (if the document is over 30k characters, we will split into beginning, middle, and end):
+```
+{document}
+```
+
+
+# Response Format
+
+
+You must respond with the following format.
+
+```
+Content Analysis:
+1. Core themes: [List 2-3 main themes/topics]
+2. Subject focus: [Describe primary subject matter in 1-2 sentences]
+3. Content type: [Specify format/presentation style - e.g., academic paper, blog post, news article]
+4. Target audience: [Identify intended readers/users]
+5. Purpose: [State main purpose/objective in 1-2 sentences]
+
+Classification Logic:
+
+Document Type Classification: 
+- Consider possible Document Type classifications: [Think through possible classifications]
+- Final determination: [Explain why the chosen Document Type primary and secondary classification is the most appropriate]
+
+Reasoning Depth Classification:
+- Consider possible Reasoning Depth classifications: [Think through possible classifications]
+- Final determination: [Explain why the chosen Reasoning Depth primary and secondary classification is the most appropriate]
+
+Technical Correctness Classification:
+- Consider possible Technical Correctness classifications: [Think through possible classifications]
+- Final determination: [Explain why the chosen Technical Correctness primary and secondary classification is the most appropriate]
+
+Educational Level Classification:
+- Consider possible Educational Level classifications: [Think through possible classifications]
+- Final determination: [Explain why the chosen Educational Level primary and secondary classification is the most appropriate]
+
+Final Classification:
+
+Document Type: Primary Classification: XX - Document Type Name
+Document Type: Secondary Classification: XX - Document Type Name
+
+Reasoning Depth: Primary Classification: X - Reasoning Depth Name
+Reasoning Depth: Secondary Classification: X - Reasoning Depth Name
+
+Technical Correctness: Primary Classification: X - Technical Correctness Name
+Technical Correctness: Secondary Classification: X - Technical Correctness Name
+
+Educational Level: Primary Classification: X - Educational Level Name
+Educational Level: Secondary Classification: X - Educational Level Name
+```
+
+Please carefully read the taxonomy definitions and guidelines. Then carefully read the document. Finally, synthesize the information and provide a response following the exact format above.
+
+For the secondary classification, select the most appropriate option from the remaining list. You may not abstain from providing a secondary classification.

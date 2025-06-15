@@ -1,0 +1,253 @@
+Given the following web document, analyze it and classify it according to following taxonomies. Your response should strictly follow the format below.
+
+For each taxonomy you will be providing a primary and secondary classification. If the secondary classification is not applicable, you may respond with a primary classification and "-1 - Abstain" for the secondary classification.
+
+For context, these are web documents that have been extracted from HTML to plaintext using the resiliparse extraction library. For documents over 30k characters, we chunk them into beginning, middle, and end to limit the context length.
+
+
+# Taxonomy Definitions
+
+
+## [Existing Taxonomy] Dewey Decimal System (DDS)
+
+
+### Taxonomy Definition
+Analyze the document and classify it according to the Dewey Decimal System.
+Focus on the primary content of the document to determine the most appropriate DDS classification.
+
+### Guidelines
+1. Prioritize the most specific applicable DDS classification rather than just broad categories 
+2. Consider both the subject matter and the document's intended use/purpose 
+3. If the content spans multiple DDS categories, use the most relevant as primary and next most relevant as secondary 
+4. Provide clear reasoning for why the chosen classifications are most appropriate
+
+
+## [Existing Taxonomy] Bloom Taxonomy
+
+
+### Taxonomy Definition
+Classify the document based on both prominent cognitive level of thinking present in the document, as well as the prominent level of knowledge present, using the 2001 update to Bloom's taxonomy as a classification system. 
+
+That is, a document can be labeled on the cognitive process dimension (from lower to higher order thinking) as:
+
+1 REMEMBER
+
+2 UNDERSTAND
+
+3 APPLY
+
+4 ANALYZE
+
+5 EVALUATE
+
+6 CREATE 
+
+The document can also be labeled on the knowledge dimension (from concrete to abstract knowledge) as:
+
+1 FACTUAL
+
+2 CONCEPTUAL
+
+3 PROCEDURAL
+
+4 METACOGNITIVE
+
+### Guidelines
+1. When choosing a label, pick the most advanced cognitive processing / knowledge that features prominently in the document. 
+2. The knowledge / cognitive processing label doesnt need to represent the most prominent thinking / knowledge in the document; merely notably prominent. Notably prominent means that content is prominent enough that it could serve as a good example of the thinking style / knowledge domain label 
+
+
+## [Custom] Document Type Taxonomy
+
+
+### Taxonomy Definition
+
+1 News/Editorial
+  - Journalistic or editorial content focusing on current events or opinion pieces.
+  - Examples: CNN/BBC articles, official news sites, opinion columns.
+
+2 Academic/Research
+  - Formal scholarly publications (peer-reviewed papers, theses, conference proceedings).
+  - Examples: ArXiv papers, JSTOR articles with structured abstracts.
+
+3 Reference/Encyclopedic/Educational
+  - Informational content intended as general reference (wiki-style, dictionaries, how-to guides).
+  - Examples: Wikipedia pages, tutorials, FAQ documents, homework solutions, etc.
+
+4 Code/Software
+  - Content primarily focused on programming or software development
+  - Examples: GitHub repos, code snippets.
+
+5 Social/Forum
+  - User-generated conversation, Q&A boards, multi-user discussions.
+  - Examples: Reddit threads, forum posts, social media comment sections.
+
+6 Promotional/Advertisement
+  - Marketing or sales content promoting products/services.
+  - Examples: product landing pages, job postings that read like ads, direct calls to action.
+
+7 Search/Directory/Bibliography
+  - Collections of links, search result pages, minimal text directories, list of sources.
+  - Examples: lists of URLs, search result pages, bibliographies.
+
+8 Adult/Pornographic
+  - Explicit sexual content intended for adult audiences.
+  - Examples: pornographic sites, erotic content focused on arousal.
+
+9 Personal/Misc
+  - Personal diaries, small personal sites, profiles that describe an individual, or individual musings not covered by other categories.
+  - Examples: a single-person blog about daily life, personal homepage, professor profile, user profile.
+
+10 Machine-Generated
+  - Content likely produced by automated systems, often nonsensical or placeholder text.
+  - Examples: "Lorem ipsum," spun/garbled text, meaningless auto-generated data.
+
+11 Legal/Regulatory
+  - Formal legal texts/document.
+  - Examples: contracts, legal disclaimers, official legal frameworks, terms of service, privacy policies.
+
+12 Government/Political
+  - Official government communications, policy documents, political party material.
+  - Examples: campaign platforms, legislative proposals, government press releases.
+
+13 Literary/Creative
+  - Fiction, poetry, scripts, creative writing not meant as academic research.
+  - Examples: short stories, poems, novel excerpts, fanfiction.
+
+14 Reviews/Critiques
+  - Content focused on reviews, critiques, or commentary.
+  - Examples: film reviews, music critiques, product reviews.
+
+15 E-Commerce/Marketplace
+  - Websites/listings facilitating product/service purchases.
+  - Examples: eBay listings, Amazon product pages, product listings.
+
+16 Images/Videos/Audio
+  - Content containing images, videos, or audio as the primary content.
+  - Examples: YouTube video, web page displaying an image, audio clip.
+
+17 Other/Unclassified
+  - Does not fit any category above or is too ambiguous to classify.
+
+
+## [Custom] Extraction Artifacts Taxonomy
+
+
+### Taxonomy Definition
+
+0 No Artifacts
+  - Text is clean, no obvious leftover HTML or irrelevant elements.
+  - If there are no artifacts in the document, select this as the primary and secondary artifact type.
+
+1 Leftover HTML
+  - HTML/code artifacts in the document (partial tags, JS server code dumped in the body)
+
+2 Text Extraction Errors
+  - Broken math expressions, encoding errors, improperly parsed tables.
+
+3 Irrelevant Content
+  - Headers, footers, nav menus, forms at the top or bottom of the page, sidebars, or large non-core sections extracted by mistake (anywhere in text).
+  - Look for content that is not core to the purpose of the document and is likely caused by the HTML -> plaintext conversion process.
+
+4 Indeterminate
+  - Not enough context to judge artifacts.
+
+  
+## [Custom] Missing Content Taxonomy
+
+
+### Taxonomy Definition
+
+0 No missing content
+  - Text seems complete/coherent; no signs of absent passages.
+
+1 Truncated Snippets
+  - Obvious "..." or partial paragraphs indicating partial excerpt or cut-off.
+
+2 Click Here References
+  - "Click here," "download here," or references to content not present.
+
+3 Incoherent Flow
+  - Text is partially unreadable or illogical due to missing key context.
+
+4 Missing Images or Figures
+  - Mentions placeholders or references to images/figures not included (e.g., "See Figure 2").
+
+5 Missing Referenced Data
+  - Mentions data/tables/datasets not included (e.g., "See Table 3"), but it's absent.
+
+6 Indeterminate
+  - Not enough context to judge if anything is missing.
+
+
+# Document 
+
+
+## Document
+
+URL: {url}
+Length: {num_char} characters
+Document Content (if the document is over 30k characters, we will split into beginning, middle, and end):
+```
+{document}
+```
+
+
+# Response Format
+
+
+You must respond with the following format. If a secondary classification is not applicable, you may abstain from providing a secondary classification by answering with "-1 - Abstain" for the secondary classification.
+
+```
+Content Analysis:
+1. Core themes: [List 2-3 main themes/topics]
+2. Subject focus: [Describe primary subject matter in 1-2 sentences]
+3. Content type: [Specify format/presentation style - e.g., academic paper, blog post, news article]
+4. Target audience: [Identify intended readers/users]
+5. Purpose: [State main purpose/objective in 1-2 sentences]
+
+Classification Logic:
+
+Dewey Decimal Classification: 
+- Consider possible DDS classifications: [Think through possible classifications]
+- Final determination: [Explain why the chosen DDS primary and secondary classification is the most appropriate]
+
+Bloom Taxonomy Classification:
+- Consider possible Bloom cognitive process classifications: [Think through possible classifications]
+- Consider possible Bloom knowledge domain classifications: [Think through possible classifications]
+- Final determination: [Explain why the chosen Bloom primary and secondary classification is the most appropriate]
+
+Document Type Classification: 
+- Consider possible Document Type classifications: [Think through possible classifications]
+- Final determination: [Explain why the chosen Document Type primary and secondary classification is the most appropriate]
+
+Extraction Artifacts Classification: 
+- Consider possible Extraction Artifacts classifications: [Think through possible classifications]
+- Final determination: [Explain why the chosen Extraction Artifacts primary and secondary classification is the most appropriate]
+
+Missing Content Classification: 
+- Consider possible Missing Content classifications: [Think through possible classifications]
+- Final determination: [Explain why the chosen Missing Content primary and secondary classification is the most appropriate]
+
+Final Classification:
+
+DDS: Primary Classification: XXX.XXX  - DDS Classification Name
+DDS: Secondary Classification: XXX.XXX  - DDS Classification Name
+
+Bloom Cognitive Process: Primary Classification: X - Bloom Cognitive Process Name
+Bloom Cognitive Process: Secondary Classification: X - Bloom Cognitive Process Name
+
+Bloom Knowledge Domain: Primary Classification: X - Bloom Knowledge Domain Name
+Bloom Knowledge Domain: Secondary Classification: X - Bloom Knowledge Domain Name
+
+Document Type: Primary Classification: XX - Document Type Name
+Document Type: Secondary Classification: XX - Document Type Name
+
+Extraction Artifacts: Primary Classification: X - Extraction Artifacts Name
+Extraction Artifacts: Secondary Classification: X - Extraction Artifacts Name
+
+Missing Content: Primary Classification: X - Missing Content Name
+Missing Content: Secondary Classification: X - Missing Content Name
+```
+
+Please carefully read the taxonomy definitions and guidelines. Then carefully read the document. Finally, synthesize the information and provide a response following the exact format above. 
