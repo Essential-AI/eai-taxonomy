@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 DESCRIPTION = """
-compute nmi or npmi over a set of annotator/category combinataions
+compute nmi or npmi over a set of annotator/category combinations
 * if NMI, the options {categorey_paths} -a {annotator_paths} will cause the following to be computed:
   - each annotator/category pair will be a row in a NMI matrix
   - each annotator/category pair will be a column in a NMI matrix
